@@ -1,0 +1,55 @@
+package tests
+
+import (
+	"log"
+	"log/slog"
+)
+
+func ideal_logs() {
+	//correct logs
+	log.Println("login successful")
+	slog.Info("request processed")
+}
+
+func easy_eng() {
+	//english tests
+	log.Println("успешная авторизация") // want "Log messages must be in English\n"
+	slog.Info("запрос обработан") // want "Log messages must be in English\n"
+}
+
+func easy_lowercase() {
+	//lowercase tests
+	log.Println("Login successful") // want "Log messages must start with a lowercase letter\n"
+	slog.Info("Request processed") // want "Log messages must start with a lowercase letter\n"
+}
+
+func easy_symbols() {
+	//symbols test
+	log.Println("login successful!!! 😎") // want "Log messages must not contain special characters or emojis\n"
+	slog.Info("request processed :)) well done 🤩") // want "Log messages must not contain special characters or emojis\n"
+	log.Println("you are did great, good job") // want "Log messages must not contain special characters or emojis\n"
+	slog.Info("have a nice day 😁") // want "Log messages must not contain special characters or emojis\n"
+}
+
+func easy_sensitive() {
+	//sensitive data tests
+	password := "1234"
+	token := "sfvvbnkvsrvswk23e2k3f3"
+	key := "superprivate"
+	api_key := "4321"
+	accessToken := "rsvjnvisrutgnvirt"
+	
+	slog.Info("user password " + password) // want "Log messages must not contain sensitive data\n"
+	slog.Debug("apikey " + api_key) // want "Log messages must not contain sensitive data\n"
+	log.Println("token " + token) // want "Log messages must not contain sensitive data\n"
+	slog.Info("accessToken " + accessToken) // want "Log messages must not contain sensitive data\n"
+	slog.Info("here is your key " + key) // want "Log messages must not contain sensitive data\n"
+}
+
+func SimpleTests() {
+	ideal_logs()
+	easy_eng()
+	easy_lowercase()
+	easy_sensitive()
+	easy_symbols()
+}

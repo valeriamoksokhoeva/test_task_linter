@@ -15,7 +15,7 @@ const Doc = "check log messages for rules: \n" +
 	"4. no sensitive data"
 
 var Analyzer = &analysis.Analyzer{
-	Name: "linter_of_logs",
+	Name: "linterlog",
 	Doc: Doc,
 	Run: run,
 }

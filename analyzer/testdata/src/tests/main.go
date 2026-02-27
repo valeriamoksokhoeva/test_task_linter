@@ -1,6 +1,6 @@
 package tests
 
 func main() {
-	SimpleTests()
+	simple_tests()
 	multiple_violations() 
 }

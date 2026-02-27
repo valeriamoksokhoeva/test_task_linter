@@ -24,21 +24,21 @@ func lowercase_check(text string) bool {
 }
 
 func symbols_check(text string) bool {
-	for _, letter := range text {
-		if !(unicode.IsLetter(letter) || unicode.IsDigit(letter) || letter == ' '){
-			return false
-		}
-	}
-	return true
+    for _, letter := range text {
+        if !unicode.IsLetter(letter) && !unicode.IsDigit(letter) && letter != ' ' {
+            return false
+        }
+    }
+    return true
 }
 
 func english_check(text string) bool {
-	for _, letter := range text {
-		if !(unicode.In(letter, unicode.Latin) || letter == ' ' || !unicode.IsLetter(letter)){
-			return false
-		}
-	}
-	return true
+    for _, letter := range text {
+        if unicode.IsLetter(letter) && !unicode.In(letter, unicode.Latin) {
+            return false
+        }
+    }
+    return true
 }
 
 func sensitive_check(text string) bool {

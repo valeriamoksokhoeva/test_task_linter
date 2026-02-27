@@ -46,7 +46,7 @@ func easy_sensitive() {
 	slog.Info("here is your key " + key) // want "Log messages must not contain sensitive data\n"
 }
 
-func SimpleTests() {
+func simple_tests() {
 	ideal_logs()
 	easy_eng()
 	easy_lowercase()

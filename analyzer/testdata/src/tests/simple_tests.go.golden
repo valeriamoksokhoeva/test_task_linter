@@ -1,0 +1,55 @@
+package tests
+
+import (
+	"log"
+	"log/slog"
+)
+
+func ideal_logs() {
+	//correct logs
+	log.Println("login successful")
+	slog.Info("request processed")
+}
+
+func easy_eng() {
+	//english tests
+	log.Println("                    ") // want "Log messages must be in English\n"
+	slog.Info("                ")       // want "Log messages must be in English\n"
+}
+
+func easy_lowercase() {
+	//lowercase tests
+	log.Println("login successful") // want "Log messages must start with a lowercase letter\n"
+	slog.Info("request processed")  // want "Log messages must start with a lowercase letter\n"
+}
+
+func easy_symbols() {
+	//symbols test
+	log.Println("login successful     ")           // want "Log messages must not contain special characters or emojis\n"
+	slog.Info("request processed     well done  ") // want "Log messages must not contain special characters or emojis\n"
+	log.Println("you are did great  good job")     // want "Log messages must not contain special characters or emojis\n"
+	slog.Info("have a nice day  ")                 // want "Log messages must not contain special characters or emojis\n"
+}
+
+func easy_sensitive() {
+	//sensitive data tests
+	password := "1234"
+	token := "sfvvbnkvsrvswk23e2k3f3"
+	key := "superprivate"
+	api_key := "4321"
+	accessToken := "rsvjnvisrutgnvirt"
+
+	slog.Info("user deleted" + password)    // want "Log messages must not contain sensitive data\n"
+	slog.Debug("deleted" + api_key)         // want "Log messages must not contain sensitive data\n"
+	log.Println("deleted" + token)          // want "Log messages must not contain sensitive data\n"
+	slog.Info("deleted" + accessToken)      // want "Log messages must not contain sensitive data\n"
+	slog.Info("here is your deleted" + key) // want "Log messages must not contain sensitive data\n"
+}
+
+func simple_tests() {
+	ideal_logs()
+	easy_eng()
+	easy_lowercase()
+	easy_sensitive()
+	easy_symbols()
+}

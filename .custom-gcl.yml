@@ -1,8 +1,0 @@
-version: v2.10.1
-name: linterlog
-destination: ./
-
-plugins:
-  - module: 'github.com/valeriamoksokhoeva/test_task_linter'
-    path: /Users/valeriia/Documents/linter_project
-    import: 'github.com/valeriamoksokhoeva/test_task_linter/plugin' 

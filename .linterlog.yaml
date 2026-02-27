@@ -1,0 +1,12 @@
+rules:
+  check_first_letter: true
+  check_english: true
+  check_special_chars: true
+  check_sensitive_data: true
+
+sensitive_data:
+  use_default_patterns: true
+  custom_patterns:
+    - "api_key"
+    - "private_key"
+    - "access_token"

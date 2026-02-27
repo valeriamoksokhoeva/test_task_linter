@@ -1,10 +1,10 @@
 package analyzer
 
 import (
-	"testing"
 	"golang.org/x/tools/go/analysis/analysistest"
+	"testing"
 )
 
 func TestAnalyzer(t *testing.T) {
-	analysistest.Run(t, analysistest.TestData(), Analyzer, "tests")
+	analysistest.RunWithSuggestedFixes(t, analysistest.TestData(), Analyzer, "tests")
 }

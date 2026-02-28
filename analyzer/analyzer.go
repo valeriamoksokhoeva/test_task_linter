@@ -31,7 +31,7 @@ func run(pass *analysis.Pass) (any, error) {
 	configPath := os.Getenv("LINTERLOG_CONFIG")
 
 	if configPath == "" {
-		configPath = "../.linterlog.yaml" // значение по умолчанию
+		configPath = "../.linterlog.yaml" 
 	}
 
 	cfg, err := load_config(configPath)

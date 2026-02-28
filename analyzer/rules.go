@@ -56,7 +56,27 @@ func checkRules(pass *analysis.Pass, lit *ast.BasicLit, text string, cfg *Config
 	if text == "" {
 		return
 	}
+	if cfg.Rules.CheckSensitiveData && !sensitive_check(text, cfg) {
+		fixed_text := sensetive_clean(text, cfg)
 
+		pass.Report(analysis.Diagnostic{
+			Pos:     lit.Pos(),
+			End:     lit.End(),
+			Message: "Log messages must not contain sensitive data\n",
+			SuggestedFixes: []analysis.SuggestedFix{
+				{
+					Message: "redact sensitive data",
+					TextEdits: []analysis.TextEdit{
+						{
+							Pos:     lit.Pos(),
+							End:     lit.End(),
+							NewText: []byte(`"` + fixed_text + `"`),
+						},
+					},
+				},
+			},
+		})
+	}
 	if cfg.Rules.CheckFirstLetter && !lowercase_check(text) {
 		fixed_text := lowercase_make(text)
 
@@ -123,25 +143,5 @@ func checkRules(pass *analysis.Pass, lit *ast.BasicLit, text string, cfg *Config
 		})
 	}
 
-	if cfg.Rules.CheckSensitiveData && !sensitive_check(text, cfg) {
-		fixed_text := sensetive_clean(text, cfg)
-
-		pass.Report(analysis.Diagnostic{
-			Pos:     lit.Pos(),
-			End:     lit.End(),
-			Message: "Log messages must not contain sensitive data\n",
-			SuggestedFixes: []analysis.SuggestedFix{
-				{
-					Message: "redact sensitive data",
-					TextEdits: []analysis.TextEdit{
-						{
-							Pos:     lit.Pos(),
-							End:     lit.End(),
-							NewText: []byte(`"` + fixed_text + `"`),
-						},
-					},
-				},
-			},
-		})
-	}
+	
 }

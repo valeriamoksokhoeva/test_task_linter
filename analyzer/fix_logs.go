@@ -30,27 +30,34 @@ func symbols_clean(text string) string {
 
 func sensetive_clean(text string, cfg *Config) string {
 	patterns := cfg.get_sensitive_patterns()
+	
+	patternMap := make(map[string]bool)
+	for _, p := range patterns {
+		patternMap[strings.ToLower(p)] = true
+	}
 	words := strings.Fields(text)
 	result := make([]string, 0, len(words))
-
+	
 	for _, word := range words {
 		shouldRedact := false
 		wordLower := strings.ToLower(word)
-
-		for _, pattern := range patterns {
-			if strings.Contains(wordLower, pattern) {
+		cleanWord := strings.TrimFunc(wordLower, func(r rune) bool {
+			return !unicode.IsLetter(r) && !unicode.IsDigit(r)
+		})
+		
+		for pattern := range patternMap {
+			if strings.Contains(cleanWord, pattern) {
 				shouldRedact = true
 				break
 			}
 		}
-
 		if shouldRedact {
 			result = append(result, "deleted")
 		} else {
 			result = append(result, word)
 		}
 	}
-
+	
 	return strings.Join(result, " ")
 }
 
